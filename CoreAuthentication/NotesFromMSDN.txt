@@ -1,0 +1,3 @@
+﻿https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-2.1
+ASP.NET Core Identity uses default values for settings such as password policy, lockout, and cookie configuration. 
+These settings can be overridden in the Startup class.
