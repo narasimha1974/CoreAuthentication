@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authentication;
 
 namespace CoreAuthentication
 {
@@ -47,14 +48,14 @@ namespace CoreAuthentication
                 options.Password.RequiredUniqueChars = 1;
             });
 
-            //    services.AddIdentity<ApplicationUser, IdentityRole>()
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
             //.AddEntityFrameworkStores<ApplicationDbContext>()
             //.AddDefaultTokenProviders();
-           
+
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];                
             });
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -70,15 +71,22 @@ namespace CoreAuthentication
             services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("AtLeast21", policy =>
+            //        policy.Requirements.Add(new MinimumAgeRequirement(21)));
+            //});
+
             services.AddMvc(config =>
             {
-                // using Microsoft.AspNetCore.Mvc.Authorization;
-                // using Microsoft.AspNetCore.Authorization;
+                //using Microsoft.AspNetCore.Mvc.Authorization;
+                //using Microsoft.AspNetCore.Authorization;
                 var policy = new AuthorizationPolicyBuilder()
                                  .RequireAuthenticatedUser()
                                  .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

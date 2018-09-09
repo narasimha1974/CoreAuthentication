@@ -15,21 +15,22 @@ namespace CoreAuthentication
     {
         public static void Main(string[] args)
         {
-            var host = BuildWebHost(args);
+            IWebHost host = BuildWebHost(args);
 
-            using (var scope = host.Services.CreateScope())
+            using (IServiceScope scope = host.Services.CreateScope())
             {
-                var services = scope.ServiceProvider;
+                IServiceProvider services = scope.ServiceProvider;
                 try
                 {
-                    var serviceProvider = services.GetRequiredService<IServiceProvider>();
-                    var configuration = services.GetRequiredService<IConfiguration>();
-                    Data.Seed.CreateRoles(serviceProvider, configuration).Wait();
+                    IServiceProvider serviceProvider = services.GetRequiredService<IServiceProvider>();
+                    IConfiguration configuration = services.GetRequiredService<IConfiguration>();
+                    Data.Seed.CreateAspNetRoles(serviceProvider, configuration).Wait();
+                    Data.Seed.CreateAspNetRoleClaims(serviceProvider).Wait();
 
                 }
                 catch (Exception exception)
                 {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    ILogger logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(exception, "An error occurred while creating roles");
                 }
             }
