@@ -48,6 +48,11 @@ namespace CoreAuthentication
                 options.Password.RequiredUniqueChars = 1;
             });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Top2ManagerOnly", policy => policy.RequireClaim("ManagerType","CEO","CTO"));
+            });
+
             //services.AddIdentity<ApplicationUser, IdentityRole>()
             //.AddEntityFrameworkStores<ApplicationDbContext>()
             //.AddDefaultTokenProviders();

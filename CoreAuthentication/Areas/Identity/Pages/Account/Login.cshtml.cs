@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Security.Principal;
 
 namespace CoreAuthentication.Areas.Identity.Pages.Account
 {
@@ -76,6 +77,17 @@ namespace CoreAuthentication.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
+                     
+                    Microsoft.AspNetCore.Identity.IdentityUser MANCIIU = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    // Create generic principal.  
+                    IList<String> RolesList = await _signInManager.UserManager.GetRolesAsync(MANCIIU);
+                    System.Security.Claims.Claim claim = new System.Security.Claims.Claim("Role", "Admin");
+                    User.Claims.Append(claim);
+                    GenericPrincipal genericPrincipal = new GenericPrincipal(User.Identity, RolesList.ToArray<string>());
+                    System.Security.Claims.ClaimsPrincipal cp = new System.Security.Claims.ClaimsPrincipal();
+                    
+                    this.HttpContext.User = genericPrincipal;
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
