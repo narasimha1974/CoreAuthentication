@@ -10,33 +10,26 @@ using System.Threading;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security.Principal;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreAuthentication.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        UserManager<IdentityUser> _userManager = null;
-        RoleManager<IdentityRole> _roleManager = null;
-        public HomeController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+         
+        public HomeController()
         {
-            _userManager = userManager;
-            _roleManager = roleManager;
+            
         }
 
+        [Authorize( Roles = "Admin")]
         public IActionResult Index()
         {
-            System.Security.Claims.ClaimsPrincipal currentUser = this.User;
-            bool IsAdmin = currentUser.IsInRole("Admin");
-            var id = _userManager.GetUserId(User); // Get user id:
-            string str = "";
-            foreach (System.Security.Claims.Claim clm in currentUser.Claims)
-            {
-                str += clm.Value + " ";
-            }
+           
 
             return View();
         }
-       
 
         public IActionResult About()
         {
@@ -45,7 +38,7 @@ namespace CoreAuthentication.Controllers
           
             return View();
         }
-
+        [AllowAnonymous]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";

@@ -52,6 +52,8 @@ namespace CoreAuthentication
             //.AddEntityFrameworkStores<ApplicationDbContext>()
             //.AddDefaultTokenProviders();
 
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIn");
+
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
@@ -70,6 +72,7 @@ namespace CoreAuthentication
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
             //services.AddAuthorization(options =>
             //{
@@ -92,6 +95,34 @@ namespace CoreAuthentication
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            /**********************************************************************/
+            /*
+            app.Use((context, next) =>
+            {
+                //Do some work here
+                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                //Pass the request on down to the next pipeline (Which is the MVC middleware)
+                return next();
+            });
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("Hello World!");
+            });
+
+            app.Use(async (context, next) =>
+            {
+                await context.Response.WriteAsync("Hello World!");
+            });
+
+            app.Use((context, next) =>
+            {
+                context.Response.Headers.Add("X-Xss-Protection", "1");
+                return next();
+            });
+            */
+            /**********************************************************************/
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -109,12 +140,16 @@ namespace CoreAuthentication
 
             app.UseAuthentication();
 
+            app.UseMyMiddleware();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+           
         }
     }
 }
