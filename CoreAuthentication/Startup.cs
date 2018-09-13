@@ -33,8 +33,9 @@ namespace CoreAuthentication
             services.Configure<IdentityOptions>(options =>
             {
                 // Default Lockout settings.
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);                
                 options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(40);
                 options.Lockout.AllowedForNewUsers = true;
             });
             services.Configure<IdentityOptions>(options =>
@@ -47,15 +48,16 @@ namespace CoreAuthentication
                 options.Password.RequiredLength = 1;
                 options.Password.RequiredUniqueChars = 1;
             });
+            services.ConfigureApplicationCookie(options =>
+              {
+                  options.SlidingExpiration = true;
+                  options.ExpireTimeSpan = TimeSpan.FromSeconds(40);
+              });
 
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Top2ManagerOnly", policy => policy.RequireClaim("ManagerType","CEO","CTO"));
             });
-
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //.AddEntityFrameworkStores<ApplicationDbContext>()
-            //.AddDefaultTokenProviders();
 
             services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIn");
 
@@ -79,16 +81,8 @@ namespace CoreAuthentication
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("AtLeast21", policy =>
-            //        policy.Requirements.Add(new MinimumAgeRequirement(21)));
-            //});
-
             services.AddMvc(config =>
             {
-                //using Microsoft.AspNetCore.Mvc.Authorization;
-                //using Microsoft.AspNetCore.Authorization;
                 var policy = new AuthorizationPolicyBuilder()
                                  .RequireAuthenticatedUser()
                                  .Build();
@@ -99,34 +93,7 @@ namespace CoreAuthentication
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-
-            /**********************************************************************/
-            /*
-            app.Use((context, next) =>
-            {
-                //Do some work here
-                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
-                //Pass the request on down to the next pipeline (Which is the MVC middleware)
-                return next();
-            });
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
-
-            app.Use(async (context, next) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
-
-            app.Use((context, next) =>
-            {
-                context.Response.Headers.Add("X-Xss-Protection", "1");
-                return next();
-            });
-            */
-            /**********************************************************************/
+        {           
 
             if (env.IsDevelopment())
             {

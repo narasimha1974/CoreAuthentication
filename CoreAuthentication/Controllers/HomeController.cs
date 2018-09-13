@@ -25,40 +25,13 @@ namespace CoreAuthentication.Controllers
 
         [Authorize(Policy = "Top2ManagerOnly")]
         public IActionResult Index()
-        {
-            foreach (Claim claim in HttpContext.User.Claims)
-            {
-
-                // Write out each claim type, claim value, and the right. There are two
-                // possible values for the right: "identity" and "possessproperty". 
-                string str = ""; ;
-                
-                str+="Claim Type = {0}"+ claim.Type;
-                str+= "\t Resource = {0}"+ claim.Value;
-                str+= "\t Right = {0}"+ claim.ValueType;
-
-                
-                
-            }
+        {            
             return View();
         }
 
-        public async Task<IActionResult> About()
+        public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
-            string userId = _userManager.GetUserId(this.User);
-            //cannot convert from System.Security.Principal.Identity to Microsoft.AspNetCore.Identity.IdentityUser
-            IdentityUser xiu = null;
-            foreach (IdentityUser use in _userManager.Users)
-            {
-                if (use.Email == this.User.Identity.Name)
-                {
-                    xiu = use;
-                }
-            }
-            IList<String> xi = await _userManager.GetRolesAsync(xiu);
-            var x = this.User;
-
+            ViewData["Message"] = "Your application description page.";           
             return View();
         }
         [AllowAnonymous]
