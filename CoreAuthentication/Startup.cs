@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authentication;
+using RepositoryHelperInterfaces;
+using RepositoryHelperClasses;
 
 namespace CoreAuthentication
 {
@@ -30,6 +32,8 @@ namespace CoreAuthentication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddTransient<ICRUDCountry, CRUDCountry>();
             services.Configure<IdentityOptions>(options =>
             {
                 // Default Lockout settings.
@@ -48,23 +52,23 @@ namespace CoreAuthentication
                 options.Password.RequiredLength = 1;
                 options.Password.RequiredUniqueChars = 1;
             });
+
             services.ConfigureApplicationCookie(options =>
-              {
-                  options.SlidingExpiration = true;
-                  options.ExpireTimeSpan = TimeSpan.FromSeconds(40);
-              });
+            {
+                options.SlidingExpiration = true;
+                options.ExpireTimeSpan = TimeSpan.FromSeconds(40);
+                options.LoginPath = "/Account/LogIn";
+            });
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Top2ManagerOnly", policy => policy.RequireClaim("ManagerType","CEO","CTO"));
+                options.AddPolicy("Top2ManagerOnly", policy => policy.RequireClaim("ManagerType", "CEO", "CTO"));
             });
-
-            services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIn");
-
+            
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];                
+                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
             });
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -75,11 +79,10 @@ namespace CoreAuthentication
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
 
             services.AddMvc(config =>
             {
@@ -109,8 +112,11 @@ namespace CoreAuthentication
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+                        
+            // the authentication middleware associates the request with a user.
             app.UseAuthentication();
+
+            //In practice, you often don't have a dedicated authorization middleware, instead allowing the MvcMiddleware to handle the authorization requirements.
 
             app.UseMyMiddleware();
 
@@ -119,9 +125,7 @@ namespace CoreAuthentication
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-            });
-
-           
+            });           
         }
     }
 }
