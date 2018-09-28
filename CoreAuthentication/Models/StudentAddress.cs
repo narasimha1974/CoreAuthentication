@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CoreAuthentication.Models
 {
-    public class StudentAddress
+    public partial class StudentAddress
     {
-        [Key]
-        public string ID { get; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string FatherName { get; set; }
         public string MotherName { get; set; }
@@ -17,7 +13,7 @@ namespace CoreAuthentication.Models
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string AddressLine3 { get; set; }
-        public string PIN { get; set; }
+        public string Pin { get; set; }
         public string CityId { get; set; }
         public string DistrictId { get; set; }
         public string StateId { get; set; }
@@ -26,7 +22,6 @@ namespace CoreAuthentication.Models
         public string EmailsGroupId { get; set; }
         public string FaxsGroupId { get; set; }
         public string WebSitesGroupId { get; set; }
-        public DateTime DOB { get; set; }
+        public DateTime? Dob { get; set; }
     }
-
 }
