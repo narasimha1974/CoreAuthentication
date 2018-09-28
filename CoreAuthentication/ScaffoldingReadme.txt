@@ -16,3 +16,6 @@ The generated UI requires MVC. To add MVC to your app:
 
 Apps that use ASP.NET Core Identity should also use HTTPS. To enable HTTPS see https://go.microsoft.com/fwlink/?linkid=848054.
 
+
+PM>Scaffold-DbContext "Server=DESKTOP-NB093L1\SQLEXPRESS;Database=aspnet-CoreAuthentication-BE4FE1DC-1288-4515-9E4A-1B6F524F8DF7;user Id=vista;Password=star;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir "C:\Repository\CoreAuthentication\RepositoryHelperClasses\Models"
+
