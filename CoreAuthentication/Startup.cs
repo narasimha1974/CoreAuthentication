@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using RepositoryHelperInterfaces;
 using RepositoryHelperClasses;
+using CoreAuthentication.Models;
 
 namespace CoreAuthentication
 {
@@ -79,6 +80,9 @@ namespace CoreAuthentication
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<aspnetCoreAuthenticationBE4FE1DC128845159E4A1B6F524F8DF7Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
