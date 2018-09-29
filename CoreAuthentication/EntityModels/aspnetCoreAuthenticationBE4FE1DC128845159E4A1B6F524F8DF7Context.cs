@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using CoreAuthentication.ViewModel;
 
 namespace CoreAuthentication.Models
 {
@@ -511,6 +512,6 @@ namespace CoreAuthentication.Models
 
                 entity.Property(e => e.WebSitesGroupId).HasColumnType("numeric(12, 0)");
             });
-        }
+        }      
     }
 }

@@ -1,24 +1,27 @@
-﻿@model RepositoryHelper.Models.Country
+﻿@model CoreAuthentication.ViewModel.CountryVM
 
 @{
-    ViewData["Title"] = "AddCountry";
+    ViewData["Title"] = "Country";
 }
 
-<h2>AddCountry</h2>
+<h2>Country</h2>
 
 <h4>Country</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddCountry">
+        <form asp-action="Country">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="country.Name" class="control-label"></label>
+                <input asp-for="country.Name" class="form-control" />
+                <span asp-validation-for="country.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+            <div>
+                <partial name="_Countries" for="countries" />
             </div>
         </form>
     </div>

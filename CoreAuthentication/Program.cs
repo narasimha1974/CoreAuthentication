@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RepositoryHelperInterfaces;
 
 namespace CoreAuthentication
 {
@@ -25,7 +24,6 @@ namespace CoreAuthentication
                 {
                     IServiceProvider serviceProvider = services.GetRequiredService<IServiceProvider>();
                     IConfiguration configuration = services.GetRequiredService<IConfiguration>();
-                    ICRUDCountry crudCountry = services.GetRequiredService<ICRUDCountry>();
                     Data.Seed.CreateAspNetRoles(serviceProvider, configuration).Wait();
                     Data.Seed.CreateAspNetRoleClaims(serviceProvider).Wait();
 

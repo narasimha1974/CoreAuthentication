@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using CoreAuthentication.Models;
-using RepositoryHelper.Models;
 
 namespace CoreAuthentication.Data
 {
@@ -14,6 +13,5 @@ namespace CoreAuthentication.Data
             : base(options)
         {
         }
-        public DbSet<RepositoryHelper.Models.Country> Country { get; set; }
     }
 }

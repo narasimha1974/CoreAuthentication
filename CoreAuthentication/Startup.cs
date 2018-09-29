@@ -14,9 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Authentication;
-using RepositoryHelperInterfaces;
-using RepositoryHelperClasses;
 using CoreAuthentication.Models;
 
 namespace CoreAuthentication
@@ -34,7 +31,6 @@ namespace CoreAuthentication
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddTransient<ICRUDCountry, CRUDCountry>();
             services.Configure<IdentityOptions>(options =>
             {
                 // Default Lockout settings.
