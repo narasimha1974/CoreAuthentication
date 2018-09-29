@@ -104,7 +104,16 @@ namespace CoreAuthentication.ViewModel
             stateVM.statesOfThisCountry = new List<State>();
             stateVM.countriesSLI = new List<SelectListItem>();
             stateVM.stateSLI = new List<SelectListItem>();
-        }               
+        }
+
+        public void SaveState(StateVM stateVM)
+        {
+            using (aspnetCoreAuthenticationBE4FE1DC128845159E4A1B6F524F8DF7Context _aspnetCoreAuthenticationBE4FE1DC128845159E4A1B6F524F8DF7Context = new aspnetCoreAuthenticationBE4FE1DC128845159E4A1B6F524F8DF7Context())
+            {
+                _aspnetCoreAuthenticationBE4FE1DC128845159E4A1B6F524F8DF7Context.State.Add(new State() { Id = Guid.NewGuid().ToString(), Name = stateVM.state, CountryId = stateVM.selectedCountryId });
+                _aspnetCoreAuthenticationBE4FE1DC128845159E4A1B6F524F8DF7Context.SaveChanges();
+            }
+        }
     }
 
 
