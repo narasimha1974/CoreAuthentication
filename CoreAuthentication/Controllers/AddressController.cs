@@ -47,21 +47,17 @@ namespace CoreAuthentication.Controllers
         {
             StateVM_DataManager stateVM_DataManager = new StateVM_DataManager();
             stateVM_DataManager.SaveState(stateVM);
-            return RedirectToAction("State");
+            return RedirectToAction("State", stateVM);
         }
         [HttpGet]
-        public IActionResult FetchStatesOfCountry(string selectedCountryId)
+        public JsonResult FetchStatesOfCountry(string selectedCountryId = "4df4d06d-12d6-40ac-a57f-fec703bb8557")
         {
             StateVM_DataManager stateVM_DataManager = new StateVM_DataManager();
             stateVM_DataManager.SelectedCountryId = selectedCountryId;
             stateVM_DataManager.stateVM.countriesSLI = stateVM_DataManager.getCountriesAsSelectListItems();
             stateVM_DataManager.stateVM.stateSLI = stateVM_DataManager.getStatesAsSelectListItems();
-            return RedirectToAction("State",stateVM_DataManager.stateVM);
-
-        }
-
-
-
+            return Json(stateVM_DataManager.stateVM.stateSLI);
+        }       
 
         public IActionResult AddDistrict()
         {

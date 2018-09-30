@@ -17,6 +17,12 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="NewFolder1\" />
+    <Folder Include="NewFolder2\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\ApplicationScripts\ApplicationScripts.js" />
   </ItemGroup>
 
 </Project>

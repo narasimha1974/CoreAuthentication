@@ -1,0 +1,17 @@
+﻿@model CoreAuthentication.ViewModel.StateVM
+
+@*<div class="row">
+    <div class="col-md-4">
+        <form asp-action="_StatesOfCountry">*@
+            <div class="form-group">
+               <label asp-for="selectedStateId" class="control-label"></label>
+                <select asp-for="selectedStateId" asp-items="Model.stateSLI" class="form-control"></select>
+                <span asp-validation-for="selectedStateId" class="text-danger"></span>
+            </div>
+        @*</form>
+    </div>
+</div>*@
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@
