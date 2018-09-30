@@ -50,7 +50,7 @@ namespace CoreAuthentication.Controllers
             return RedirectToAction("State", stateVM);
         }
         [HttpGet]
-        public JsonResult FetchStatesOfCountry(string selectedCountryId = "4df4d06d-12d6-40ac-a57f-fec703bb8557")
+        public JsonResult FetchStatesOfCountry(string selectedCountryId)
         {
             StateVM_DataManager stateVM_DataManager = new StateVM_DataManager();
             stateVM_DataManager.SelectedCountryId = selectedCountryId;

@@ -4,13 +4,14 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="FetchStatesOfCountry">
+            <input type="hidden" id="referer" name="referer" value="initial">
             <div class="form-group">
                 <label asp-for="selectedCountryId" class="control-label"></label>
-                <select asp-for="selectedCountryId" asp-items="Model.countriesSLI" class="form-control"></select>
+                <select asp-for="selectedCountryId" asp-items="Model.countriesSLI" class="form-control" onchange="SetHiddenCountry(this)"></select>
                 <span asp-validation-for="selectedCountryId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="button" value="Go" class="btn btn-default" onclick="FetchStatesOfCountry($('#selectedCountryId').value)" />
+                <input type="button" value="Go" class="btn btn-default" onclick= "FetchStatesOfCountryFromHidden()" />
             </div>
             <div class="form-group">
                 <label asp-for="selectedStateId" class="control-label"></label>
