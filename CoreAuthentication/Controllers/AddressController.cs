@@ -32,6 +32,14 @@ namespace CoreAuthentication.Controllers
             CountryVM_DataManager countryVM_DataManager = new CountryVM_DataManager();
             ModelStateDictionary msd = CountryVM_DataManager.ValidateCountry(ref countryVM);
 
+            //Model validation occurs prior to each controller action being invoked, and it's the action method's responsibility to inspect ModelState.IsValid and react appropriately. 
+
+
+            //Manual validation
+            //After model binding and validation are complete, you may want to repeat parts of it. For example, a user may have entered text in a field expecting an integer, or you may need to compute a value for a model's property.
+            //You may need to run validation manually.To do so, call the TryValidateModel
+
+            //when TryUpdateModel()  is called it doesnot raias exceptions you should use ValidateModel Or TryValidateModel
             bool b = TryValidateModel(countryVM);
 
             foreach(string K in msd.Keys)
