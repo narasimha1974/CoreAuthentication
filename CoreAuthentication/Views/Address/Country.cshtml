@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Country";
+    
 }
 
 <h2>Country</h2>
@@ -13,6 +14,15 @@
         <form asp-action="Country">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                @*@foreach (ModelStateDictionary x in @Model.BusinessErrors)
+                {
+                    
+                    foreach (string k in x.Keys)
+                    {
+                        <label asp-for="BusinessErrors" class="control-label">@x[k].</label>
+                    }
+                    
+                }*@
                 <label asp-for="country.Name" class="control-label"></label>
                 <input asp-for="country.Name" class="form-control" />
                 <span asp-validation-for="country.Name" class="text-danger"></span>

@@ -1,4 +1,5 @@
 ﻿using CoreAuthentication.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,14 @@ namespace CoreAuthentication.ViewModel
     {
         public Country country { get; set; }
         public IEnumerable<Country> countries { get; set; }
-        
+        public List<ModelStateDictionary> BusinessErrors { get; set; }
+
+        public CountryVM()
+        {
+            countries = new List<Country>();
+            BusinessErrors = new List<ModelStateDictionary>();
+        }
+
     }
 
     public class StateVM
@@ -128,6 +136,7 @@ namespace CoreAuthentication.ViewModel
             countryVM = new CountryVM();
             countryVM.country = new Country();
             countryVM.countries = getCountries();
+            countryVM.BusinessErrors = new List<ModelStateDictionary>();
         }
         public void SaveCountry(CountryVM countryVM)
         {
@@ -136,6 +145,18 @@ namespace CoreAuthentication.ViewModel
                 _aspnetCoreAuthenticationBE4FE1DC128845159E4A1B6F524F8DF7Context.Country.Add(new Country() { Id = Guid.NewGuid().ToString(), Name = countryVM.country.Name });
                 _aspnetCoreAuthenticationBE4FE1DC128845159E4A1B6F524F8DF7Context.SaveChanges();                
             }
+        }
+        public static ModelStateDictionary ValidateCountry(ref CountryVM countryVM)
+        {
+            ModelStateDictionary keyValues = new ModelStateDictionary();
+            
+            if (countryVM.country.Name =="aa")
+            {
+                keyValues.AddModelError("country.Name", "invalid country name aa");
+                countryVM.BusinessErrors.Add(keyValues);               
+            }
+
+            return keyValues;
         }
 
     }

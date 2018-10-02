@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CoreAuthentication.Models;
 using CoreAuthentication.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 
@@ -29,6 +30,26 @@ namespace CoreAuthentication.Controllers
         public IActionResult Country(CountryVM countryVM)
         {
             CountryVM_DataManager countryVM_DataManager = new CountryVM_DataManager();
+            ModelStateDictionary msd = CountryVM_DataManager.ValidateCountry(ref countryVM);
+
+            bool b = TryValidateModel(countryVM);
+
+            foreach(string K in msd.Keys)
+            {
+                ModelStateEntry mse = null;
+                msd.TryGetValue(K,out mse);
+                ModelState.AddModelError(K, mse.Errors[0].ErrorMessage);
+                
+            }
+            bool c = ModelState.IsValid;
+
+
+            if (!c)
+            {
+                return View(countryVM);
+            }
+
+
             countryVM_DataManager.SaveCountry(countryVM);
             return RedirectToAction("Country");                        
         }
