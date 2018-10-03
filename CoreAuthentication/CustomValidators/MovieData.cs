@@ -130,11 +130,32 @@ namespace CoreAuthentication.CustomValidators
 
     // model validation attribute
     [System.AttributeUsage(AttributeTargets.Class)]
-    public class NoNameInSubjectAttribute : ValidationAttribute
+    public class NoNameInSubjectAttribute : ValidationAttribute, IClientModelValidator
     {
         public NoNameInSubjectAttribute()
         {
             ErrorMessage = "Please do NOT put your name in the Subject";
+        }
+
+        public void AddValidation(ClientModelValidationContext context)
+        {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            MergeAttribute(context.Attributes, "data-val", "true");
+            MergeAttribute(context.Attributes, "data-val-nonameinsubject", ErrorMessage);
+            
+        }
+        bool MergeAttribute(IDictionary<string, string> attributes, string key, string value)
+        {
+            if (attributes.ContainsKey(key))
+            {
+                return false;
+            }
+            attributes.Add(key, value);
+            return true;
         }
 
         public override bool IsValid(object value)
