@@ -36,7 +36,7 @@ namespace CoreAuthentication
                 // Default Lockout settings.
                 //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);                
                 options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(40);
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(200);
                 options.Lockout.AllowedForNewUsers = true;
             });
             services.Configure<IdentityOptions>(options =>
@@ -53,7 +53,7 @@ namespace CoreAuthentication
             services.ConfigureApplicationCookie(options =>
             {
                 options.SlidingExpiration = true;
-                options.ExpireTimeSpan = TimeSpan.FromSeconds(40);
+                options.ExpireTimeSpan = TimeSpan.FromSeconds(200);
                 options.LoginPath = "/Account/LogIn";
             });
 
