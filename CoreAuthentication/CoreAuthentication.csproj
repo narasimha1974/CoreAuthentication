@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\ApplicationScripts\ApplicationScripts.js" />
+    <None Include="wwwroot\PlainHtml\AddHtml.html" />
   </ItemGroup>
 
 </Project>

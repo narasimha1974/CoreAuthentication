@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using CoreAuthentication.Models;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace CoreAuthentication
 {
@@ -30,6 +32,7 @@ namespace CoreAuthentication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDirectoryBrowser();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -119,12 +122,23 @@ namespace CoreAuthentication
             //In practice, you often don't have a dedicated authorization middleware, instead allowing the MvcMiddleware to handle the authorization requirements.
 
             app.UseMyMiddleware();
+            app.UseFileServer();
+
+            string str = Directory.GetCurrentDirectory();
+            //"C:\Repository\CoreAuthentication\CoreAuthentication"
+            //"C:\Repository\CoreAuthentication\CoreAuthentication\Views\Movie"
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","PlainHtml")),
+                RequestPath = "/PlainHtml"
+            });
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");               
             });           
         }
     }

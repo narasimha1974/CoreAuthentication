@@ -1,0 +1,153 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add - CoreAuthentication</title>
+
+
+
+
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">CoreAuthentication</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/Address/Country">Country</a></li>
+                    <li><a href="/Address/State">State</a></li>
+                    <li><a href="/Address/City">City</a></li>
+                    <li><a href="/Address/FetchStatesOfCountry">City</a></li>
+                    <li><a href="/Movie/Add">Movie</a></li>
+                    <li><a href="/Email">Email</a></li>
+                </ul>
+
+
+                <form method="post" id="logoutForm" class="navbar-right" action="/Identity/Account/Logout?returnUrl=%2F">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a title="Manage" href="/Identity/Account/Manage">Hello a@g.com!</a>
+                        </li>
+                        <li>
+                            <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
+                        </li>
+                    </ul>
+                    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8FmJsSqrngVDrDGaTwGDqGosC29DHVX2fHKAFoXaadg5a5xzgiIfhEmsmeM5d5h90VKU3sPX_kelLLAZn9-Ncty9FVK0cxBvKg1_Bv3cSa8sO0XVRRnP81pVv-u1aINhzv2rqrYYelJzc46PNBdmMaT_FwhlqoRpxITthpsj14iqrqb6QAoZKJtn6cvRxarqOQ">
+                </form>
+
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+    <div class="container body-content">
+
+
+        <h2>Add</h2>
+
+        <h4>Movie</h4>
+        <hr>
+        <div class="row">
+            <div class="col-md-4">
+                <form id="kkkk" action="/Movie/Add" method="post" novalidate="novalidate">
+
+                    <div class="form-group">
+                        <label class="control-label" for="Id">Id</label>
+                        <input class="form-control" type="number" data-val="true" data-val-required="The Id field is required." id="Id" name="Id" value="1">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Id" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="Email">Email</label>
+                        <input class="form-control" type="text" data-val="true" data-val-remote="'Email' is invalid." data-val-remote-additionalfields="*.Email" data-val-remote-url="/Movie/VerifyEmail" id="Email" name="Email" value="x@x.com">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="Title">Title</label>
+                        <input class="form-control" type="text" data-val="true" data-val-length="The field Title must be a string with a maximum length of 100." data-val-length-max="100" data-val-required="The Title field is required." id="Title" name="Title" value="sastry">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Title" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="ReleaseDate">ReleaseDate</label>
+                        <input class="form-control" type="date" data-val="true" data-val-classicmovie="Classic movies must have a release year earlier than 1960. from server" data-val-classicmovie-year="1960" data-val-required="The ReleaseDate field is required." id="ReleaseDate" name="ReleaseDate" value="2018-10-07">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="ReleaseDate" data-valmsg-replace="true"></span>                        
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="StartDate">Start date</label>
+                        <input class="form-control" type="date" data-val="true" data-val-required="The Start date field is required." id="StartDate" name="StartDate" value="1974-01-01">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="StartDate" data-valmsg-replace="true"></span>                        
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="EndDate">Estimated end date</label>
+                        <input class="form-control" type="date" data-val="true" data-val-dategreaterthan="start date should be less than end date " data-val-required="The Estimated end date field is required." id="EndDate" name="EndDate" value="1984-01-01">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="EndDate" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="Description">Description</label>
+                        <input class="form-control" type="text" data-val="true" data-val-length="The field Description must be a string with a maximum length of 1000." data-val-length-max="1000" data-val-required="The Description field is required." id="Description" name="Description" value="sastry">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="Price">Price</label>
+                        <input class="form-control" type="text" data-val="true" data-val-number="The field Price must be a number." data-val-range="The field Price must be between 0 and 999.99." data-val-range-max="999.99" data-val-range-min="0" data-val-required="The Price field is required." id="Price" name="Price" value="100.00">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Price" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="Genre">Genre</label>
+                        <select class="form-control" data-val="true" data-val-required="The Genre field is required." id="Genre" name="Genre">
+                            <option selected="selected" value="0">Classic</option>
+                            <option value="1">Jamesbond</option>
+                        </select>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Genre" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" data-val="true" data-val-required="The Preorder field is required." id="Preorder" name="Preorder" value="true"> Preorder
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" id="jjjjjjj" class="btn btn-default">
+                    </div>
+                    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8FmJsSqrngVDrDGaTwGDqGosC29DHVX2fHKAFoXaadg5a5xzgiIfhEmsmeM5d5h90VKU3sPX_kelLLAZn9-Ncty9FVK0cxBvKg1_Bv3cSa8sO0XVRRnP81pVv-u1aINhzv2rqrYYelJzc46PNBdmMaT_FwhlqoRpxITthpsj14iqrqb6QAoZKJtn6cvRxarqOQ"><input name="Preorder" type="hidden" value="false">
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a href="/Movie">Back to List</a>
+        </div>
+
+
+        <hr>
+        <footer>
+            <p>� 2018 - CoreAuthentication</p>
+        </footer>
+    </div>
+
+
+</body>
+
+</html>
+<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="/css/site.css">
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0"></script>
+<script src="/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script src="/ApplicationScripts/ApplicationScripts.js"></script>
+<script src="/ApplicationScripts/customValidation.js"></script>

@@ -40,6 +40,12 @@ namespace CoreAuthentication.Controllers
             bool b = ModelState.IsValid;
             return View(s);
         }
+        //[Produces("text/html")]
+        //public string PlainHtml()
+        //{
+        //    return "AddHtml.html";
+        //}
+
         [AcceptVerbs("Get", "Post")]
         public IActionResult VerifyEmail(string Email)
         {
