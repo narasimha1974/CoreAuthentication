@@ -28,7 +28,7 @@ namespace CoreAuthentication.CustomValidators
 
             MergeAttribute(context.Attributes, "data-val", "true");
             MergeAttribute(context.Attributes, "data-val-dategreaterthan", GetErrorMessage());
-        
+
         }
         bool MergeAttribute(IDictionary<string, string> attributes, string key, string value)
         {
@@ -62,7 +62,7 @@ namespace CoreAuthentication.CustomValidators
                     {
                         
                         validationResult = new ValidationResult(ErrorMessageString);
-                        validationResult.ErrorMessage = "ding dong dong !!!! from server not client validation";
+                        validationResult.ErrorMessage = "ding dong dong !!!! validation error reported from server due to invalidity of data as per DateGreaterThan attribute DataAnnotation";
                     }
                 }
                 else

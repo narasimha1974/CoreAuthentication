@@ -6,6 +6,7 @@ using CoreAuthentication.Models;
 using CoreAuthentication.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 
@@ -39,7 +40,7 @@ namespace CoreAuthentication.Controllers
             //After model binding and validation are complete, you may want to repeat parts of it. For example, a user may have entered text in a field expecting an integer, or you may need to compute a value for a model's property.
             //You may need to run validation manually.To do so, call the TryValidateModel
 
-            //when TryUpdateModel()  is called it doesnot raias exceptions you should use ValidateModel Or TryValidateModel
+            //when TryUpdateModel()  is called it doesnot raise exceptions you should use ValidateModel Or TryValidateModel
             bool b = TryValidateModel(countryVM);
 
             foreach(string K in msd.Keys)
@@ -60,7 +61,7 @@ namespace CoreAuthentication.Controllers
 
             countryVM_DataManager.SaveCountry(countryVM);
             return RedirectToAction("Country");                        
-        }
+        }        
 
         [HttpGet]
         public IActionResult State(string selectedCountryId = "")
