@@ -24,7 +24,7 @@ namespace CoreAuthentication.Controllers
             moviea.Price = 100;
             moviea.Title = "sastry";
             moviea.ReleaseDate = DateTime.Now.Date;
-            moviea.StartDate = DateTime.Parse("01/01/1974");
+            moviea.StartDate = DateTime.Parse("01/01/1994");
             moviea.EndDate= DateTime.Parse("01/01/1984");
 
             val.MovieLst = MovieVM.getMoviesAsSelectListItems();
@@ -40,12 +40,7 @@ namespace CoreAuthentication.Controllers
             bool b = ModelState.IsValid;
             return View(s);
         }
-        //[Produces("text/html")]
-        //public string PlainHtml()
-        //{
-        //    return "AddHtml.html";
-        //}
-
+     
         [AcceptVerbs("Get", "Post")]
         public IActionResult VerifyEmail(string Email)
         {
