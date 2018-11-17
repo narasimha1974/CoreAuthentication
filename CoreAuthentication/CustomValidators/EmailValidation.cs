@@ -28,11 +28,15 @@ namespace CoreAuthentication.CustomValidators
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
 
+        
         [Required(ErrorMessage = "Subject is required")]
         public string Subject { get; set; }
 
         [Required(ErrorMessage = "Message is required")]
         public string Body { get; set; }
+
+        [NoThatInThis("Name","What can I say")]
+        public string firstname { get; set; }
     }
 
 
@@ -42,7 +46,7 @@ namespace CoreAuthentication.CustomValidators
     {
         public NoNameInSubjectAttribute()
         {
-            ErrorMessage = "Please do NOT put your name in the Subject";
+            ErrorMessage = "Please do NOT put your name in the Subject from server";
         }
 
         public void AddValidation(ClientModelValidationContext context)

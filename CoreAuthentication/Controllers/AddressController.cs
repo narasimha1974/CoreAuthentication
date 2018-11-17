@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreAuthentication.EntityModels;
 using CoreAuthentication.Models;
 using CoreAuthentication.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -61,7 +62,33 @@ namespace CoreAuthentication.Controllers
 
             countryVM_DataManager.SaveCountry(countryVM);
             return RedirectToAction("Country");                        
-        }        
+        }
+
+        [HttpGet]
+        public IActionResult BrideOrGroom()
+        {
+            
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult BrideOrGroomList()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult BrideOrGroom(BrideOrGroom brideOrGroom)
+        {
+
+            using (BrideOrGroomDBContext x = new BrideOrGroomDBContext())
+            {
+                x.BrideOrGroom.Add(brideOrGroom);
+                x.SaveChanges();
+            }
+            return View();
+        }
 
         [HttpGet]
         public IActionResult State(string selectedCountryId = "")

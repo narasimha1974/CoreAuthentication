@@ -1,4 +1,5 @@
-﻿$.validator.addMethod('classicmovie',
+﻿
+$.validator.addMethod('classicmovie',
     function (value, element, params) {
         // Get element value. Classic genre has value '0'.
         var genre = $(params[0]).val(),

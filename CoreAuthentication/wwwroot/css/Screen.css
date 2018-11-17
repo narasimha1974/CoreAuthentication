@@ -1,0 +1,16 @@
+body#index #header { float: left; width: 950px; margin-right: 10px; }
+body#index #header h1 { float: left; }
+body#index #header #site-actions { float: right; margin: 0; padding: 0; border: 0; overflow: auto; overflow: -moz-scrollbars-none; display: inline-block; }
+body#index #header #site-actions { display: block; }
+body#index #header #site-actions li { list-style-type: none; margin-left: 0px; white-space: nowrap; float: left; padding-left: 4px; padding-right: 4px; }
+body#index #header #site-actions li.first { padding-left: 0px; }
+body#index #header #site-actions li.last { padding-right: 0px; }
+body#index #navigation { float: left; width: 190px; margin-right: 10px; }
+body#index #main-content { float: left; width: 750px; margin-right: 0; }
+body#index #footer { float: left; width: 950px; margin-right: 10px; }
+body#index #footer #legalese { float: left; width: 790px; margin-right: 10px; }
+body#index #footer #footer-links { float: left; width: 150px; margin-right: 0; }
+.error{
+    border: 1px solid red;
+    min-height: 20px;
+  }

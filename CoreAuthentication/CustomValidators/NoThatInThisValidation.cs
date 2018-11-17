@@ -1,19 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace CoreAuthentication.CustomValidators
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-    public class DateGreaterThanAttribute : ValidationAttribute, IClientModelValidator
+    public class NoThatInThisAttribute : ValidationAttribute, IClientModelValidator
     {
         string otherPropertyName;
 
-        public DateGreaterThanAttribute(string otherPropertyName, string errorMessage)
+        public NoThatInThisAttribute(string otherPropertyName, string errorMessage)
             : base(errorMessage)
         {
             this.otherPropertyName = otherPropertyName;
@@ -27,8 +26,7 @@ namespace CoreAuthentication.CustomValidators
             }
 
             MergeAttribute(context.Attributes, "data-val", "true");
-            MergeAttribute(context.Attributes, "data-val-dategreaterthan", GetErrorMessage());
-            MergeAttribute(context.Attributes, "data-val-datenotgreaterthancurrentyear", "date not greater than message 2018");
+            MergeAttribute(context.Attributes, "data-val-nothatinthis", GetErrorMessage());
 
         }
         bool MergeAttribute(IDictionary<string, string> attributes, string key, string value)
@@ -42,7 +40,7 @@ namespace CoreAuthentication.CustomValidators
         }
         private string GetErrorMessage()
         {
-            return $"start date should be less than end date ";
+            return otherPropertyName+ "should not be same as this value";
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -53,22 +51,35 @@ namespace CoreAuthentication.CustomValidators
                 // Using reflection we can get a reference to the other date property, in this example the project start date
                 var otherPropertyInfo = validationContext.ObjectType.GetProperty(this.otherPropertyName);
                 // Let's check that otherProperty is of type DateTime as we expect it to be
-                if (otherPropertyInfo.PropertyType.Equals(new DateTime().GetType()))
+
+                if (otherPropertyInfo == null)
                 {
-                    DateTime toValidate = (DateTime)value;
-                    DateTime referenceProperty = (DateTime)otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
-                    // if the end date is lower than the start date, than the validationResult will be set to false and return
-                    // a properly formatted error message
-                    if (toValidate.CompareTo(referenceProperty) < 1)
+                    validationResult = new ValidationResult(ErrorMessageString);
+                    validationResult.ErrorMessage = "Blanks not allowed in "+this.otherPropertyName;
+                    return validationResult;
+                }
+                if(((EmailInfo)validationContext.ObjectInstance).Name==null)
+                {
+                    validationResult = new ValidationResult(ErrorMessageString);
+                    validationResult.ErrorMessage = "Blanks not allowed in Name";
+                    return validationResult;
+                }
+                if (otherPropertyInfo.PropertyType.Name == "String")
+                {
+                   
+                    string toValidate = value.ToString();
+                    
+                    string referenceProperty = (string)otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
+                    if (toValidate.IndexOf(referenceProperty)!=-1)
                     {
-                        
+
                         validationResult = new ValidationResult(ErrorMessageString);
-                        validationResult.ErrorMessage = "ding dong dong !!!! validation error reported from server due to invalidity of data as per DateGreaterThan attribute DataAnnotation";
+                        validationResult.ErrorMessage = "ding dong dong !!!!";
                     }
                 }
                 else
                 {
-                    validationResult = new ValidationResult("An error occurred while validating the property. OtherProperty is not of type DateTime");
+                    validationResult = new ValidationResult("An error occurred while validating the property.");
                 }
             }
             catch (Exception ex)
